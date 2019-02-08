@@ -1,0 +1,123 @@
+<mvc:View 
+    controllerName="Transaction_app.controller.App" 
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	
+	
+    <App id="app">
+    <Page title="Data Visualization Tool">
+    <ScrollContainer
+		height="100%"
+		width="100%"
+		horizontal="true"
+		vertical="true"
+		focusable="true">
+		
+		
+	    <Table id="idProductsTable"
+		inset="false"
+		items="{odatamodel>/CONTACTS}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<Title text="Invoices" level="H2"/>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column
+				width="3em">
+				<Text text="Invoice Title" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Price" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Status" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Bill To" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Shipping Address" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Item Total" />
+			</Column>
+			<Column
+				width="3em">
+				<Text text="Total Freight" />
+			</Column>
+			<Column
+				width="2em">
+				<Text text="Total Tax" />
+			</Column>
+			<Column
+				width="2em">
+				<Text text="Total Amount" />
+			</Column>
+			<Column
+				width="2em">
+				<Text text="Total Balance" />
+			</Column>
+			
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{odatamodel>INVOICE_TITLE}"/>
+					<ObjectNumber
+							number="{odatamodel>PRICE}"
+							unit="{odatamodel>CURRENCY}" />
+					<Text
+						text="{odatamodel>STATUS}" />
+					<Text
+					    text="{odatamodel>BILL_TO}" />
+					    <Text
+					    text="{odatamodel>SHIPPING_ADDRESS}" />
+					    <ObjectNumber
+							number="{odatamodel>ITEM_TOTAL}"
+							unit="{odatamodel>CURRENCY}" />
+					    <ObjectNumber
+							number="{odatamodel>TOTAL_FREIGHT}"
+							unit="{odatamodel>CURRENCY}" />
+					    <ObjectNumber
+							number="{odatamodel>TOTAL_TAX}"
+							unit="{odatamodel>CURRENCY}" />
+					    <ObjectNumber
+							number="{odatamodel>TOTAL_AMOUNT}"
+							unit="{odatamodel>CURRENCY}" />
+					    <ObjectNumber
+							number="{odatamodel>TOTAL_BALANCE}"
+							unit="{odatamodel>CURRENCY}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+	
+	
+	</ScrollContainer>
+	<footer>
+	<Toolbar>
+    <Text text="Total No.of rows : {/rows}" class="sapUiSmallMargin"/>
+    <ToolbarSpacer />
+    <Button type="Emphasized" text="Show Graph" press="onshow" />
+    </Toolbar>
+	</footer>
+	    </Page>
+</App>
+</mvc:View>

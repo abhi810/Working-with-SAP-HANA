@@ -1,0 +1,214 @@
+<mvc:View 
+    controllerName="Transaction_app.controller.App" 
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	
+	
+    <App id="app">
+    <Page title="OData Service Consumption">
+    <ScrollContainer
+		height="100%"
+		width="100%"
+		horizontal="true"
+		vertical="true"
+		focusable="true">
+		
+		
+		<IconTabBar
+		id="idIconTabBar"
+		select="handleIconTabBarSelect"
+		class="sapUiResponsiveContentPadding">
+		<items>
+			<IconTabFilter
+			icon="sap-icon://compare"
+			iconColor="Critical"
+				showAll="true"
+				count="{/rows} Invoices"
+				key="Ok">
+					<List
+		items="{odatamodel>/CONTACTS}">
+		<items>
+			<ObjectListItem
+				title="{odatamodel>INVOICE_TITLE}"
+				type="Active"
+				press="onListItemPress"
+				number="{odatamodel>PRICE}"
+				numberUnit="{odatamodel>CURRENCY}">
+				<firstStatus>
+					<ObjectStatus
+						text="{odatamodel>STATUS}"
+						state="Success" />
+				</firstStatus>
+				<attributes>
+					<ObjectAttribute text="Bill To : {odatamodel>BILL_TO}" />
+					<ObjectAttribute text="Shipping Address : {odatamodel>SHIPPING_ADDRESS}" />
+				</attributes>
+			</ObjectListItem>
+		</items>
+	</List>
+	</IconTabFilter>
+	
+	<IconTabSeparator />
+			<IconTabFilter
+				icon="sap-icon://begin"
+				iconColor="Positive"
+				count="1"
+				text="Below 1k"
+				key="Ok" />
+				
+				<IconTabSeparator />
+			<IconTabFilter
+				icon="sap-icon://begin"
+				iconColor="Critical"
+				count="2"
+				text="Above 2k"
+				key="Ok" />
+				
+				
+		</items>
+	</IconTabBar>
+	
+		
+		
+	<l:HorizontalLayout>
+	
+	<viz:VizFrame xmlns="sap.viz" vizProperties="{ 
+	title: {
+	text : 'Bar Chart', 
+	visible : true
+	},
+	plotArea:{
+    dataLabel:{
+    visible : true
+    }
+    }
+	}" vizType="column">
+	<viz:dataset>
+                  <viz.data:FlattenedDataset data="{
+                path:'odatamodel>/CONTACTS'
+                }">
+                    <viz.data:dimensions>
+                      <viz.data:DimensionDefinition name="Invoice Title" value="{odatamodel>INVOICE_TITLE}" />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                      <viz.data:MeasureDefinition name="Price" value="{odatamodel>PRICE}" />
+                      <viz.data:MeasureDefinition name="Item Total" value="{odatamodel>ITEM_TOTAL}" />
+                      <viz.data:MeasureDefinition name="Total Freight" value="{odatamodel>TOTAL_FREIGHT}" />
+                      <viz.data:MeasureDefinition name="Total Tax" value="{odatamodel>TOTAL_TAX}" />
+                      <viz.data:MeasureDefinition name="Total Amount" value="{odatamodel>TOTAL_AMOUNT}" />
+                      <viz.data:MeasureDefinition name="Total Balance" value="{odatamodel>TOTAL_BALANCE}" />
+                    </viz.data:measures>
+                  </viz.data:FlattenedDataset>
+                </viz:dataset>
+                <viz:feeds>
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Price" />
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Item Total" />
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Total Freight" />
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Total Tax" />
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Total Amount" />
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Total Balance" />
+                  <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Invoice Title" />
+                </viz:feeds>
+	    </viz:VizFrame>
+	    
+	    
+	    
+	    <viz:VizFrame vizProperties="{ title: {text : 'Donut Chart', visible : true},
+	plotArea:{
+    dataLabel:{
+    visible:true
+    }
+    }}" vizType='donut'>
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{odatamodel>/CONTACTS}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Invoice Title"
+                                value="{odatamodel>INVOICE_TITLE}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Price"
+                                value="{odatamodel>PRICE}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="size" type="Measure"
+                        values="Price" />
+                    <viz.feeds:FeedItem uid="color" type="Dimension"
+                        values="Invoice Title" />
+                </viz:feeds>
+            </viz:VizFrame>
+            
+            </l:HorizontalLayout>
+            
+            <l:HorizontalLayout>
+             <viz:VizFrame vizProperties="{ title: {text : 'Pie Chart', visible : true},
+	plotArea:{
+    dataLabel:{
+    visible:true
+    }
+    }}" vizType='pie'>
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{odatamodel>/CONTACTS}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Invoice Title"
+                                value="{odatamodel>INVOICE_TITLE}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Price"
+                                value="{odatamodel>PRICE}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="size" type="Measure"
+                        values="Price" />
+                    <viz.feeds:FeedItem uid="color" type="Dimension"
+                        values="Invoice Title" />
+                </viz:feeds>
+            </viz:VizFrame>	
+            
+            <viz:VizFrame vizProperties="{ title: {text : 'Line Chart', visible : true},
+	plotArea:{
+    dataLabel:{
+    visible:true
+    }
+    }}" vizType='line'>
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{odatamodel>/CONTACTS}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Invoice Title"
+                                value="{odatamodel>INVOICE_TITLE}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Price"
+                                value="{odatamodel>PRICE}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure"
+                        values="Price" />
+                    <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension"
+                        values="Invoice Title" />
+                </viz:feeds>
+            </viz:VizFrame>
+	    
+	</l:HorizontalLayout>
+	
+	
+	</ScrollContainer>
+	
+	    </Page>
+</App>
+</mvc:View>
