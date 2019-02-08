@@ -1,0 +1,57 @@
+.formspacing {
+padding: 60px;
+}
+
+head, section
+{
+width: 100%
+}
+img
+{
+border: 0px;
+margin: 0px;
+padding-top: 0px;
+width: 200px;
+height: auto;
+position: absolute;
+}
+.zlabel {
+	padding-right: 5px;
+    padding-bottom: 15px;
+	height: 30px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px; 
+}
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+background-color: white;
+border-bottom: 10px solid blue;
+height: 64px;
+}
+li {
+display: inline-block;
+}
+li a {
+color: black;
+text-align: center;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+padding: 10px 14px;
+vertical-align: -100%;
+line-height: 20px;
+padding-right: 20px;
+text-decoration: none;
+}
+
+li a:hover {
+color: white;
+background: blue;
+transition: all 2s ease-in-out; 
+border: 2px solid blue; 
+}
+container
+{
+float: right;
+padding-right: 7%;
+}

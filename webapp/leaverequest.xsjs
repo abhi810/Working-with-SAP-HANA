@@ -1,0 +1,10 @@
+var Input = $.request.parameters.get("INPUT");
+var conn = $.db.getConnection();
+conn.prepareStatement("SET SCHEMA \"SYSTEM\"").execute();
+var results = conn.prepareStatement("INSERT INTO \"LEAVE1\" values (?,?)");
+results.setString(1,Input);
+results.setString(2,'Not Approved');
+results.execute();
+conn.commit();
+$.response.setBody(JSON.stringify(results));
+conn.close();
